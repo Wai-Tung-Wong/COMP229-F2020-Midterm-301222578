@@ -4,7 +4,9 @@ let router = express.Router();
 let mongoose = require('mongoose');
 
 // define the book model
-let book = require('../models/books');
+//let book = require('../models/books');
+let books = require('../models/books');
+
 
 /* GET books List page. READ */
 router.get('/', (req, res, next) => {
@@ -29,7 +31,7 @@ router.get('/add', (req, res, next) => {
     /*****************
      * ADD CODE HERE *
      *****************/
-
+    res.render('books/details', {title:'Add Book',})
 });
 
 // POST process the Book Details page and create a new Book - CREATE
@@ -38,7 +40,24 @@ router.post('/add', (req, res, next) => {
     /*****************
      * ADD CODE HERE *
      *****************/
-
+     let newBook = book({
+      "Title": req.body.Title,
+      "Description":req.body.Description,
+      "Price":req.body.Price,
+      "Author":req.body.Author,
+      "Genre":req.body.Genre
+  });
+  book.create(newBook,(err,books)=>{
+      if(err)
+      {
+          console.log(err);
+          res.end(err);
+      }
+      else
+      {
+      res.redirect('/books');
+      }
+  });
 });
 
 // GET the Book Details page in order to edit an existing Book
