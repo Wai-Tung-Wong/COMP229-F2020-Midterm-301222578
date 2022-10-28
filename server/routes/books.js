@@ -4,8 +4,8 @@ let router = express.Router();
 let mongoose = require('mongoose');
 
 // define the book model
-//let book = require('../models/books');
-let books = require('../models/books');
+let book = require('../models/books');
+//let books = require('../models/books');
 
 
 /* GET books List page. READ */
@@ -31,7 +31,10 @@ router.get('/add', (req, res, next) => {
     /*****************
      * ADD CODE HERE *
      *****************/
-    res.render('books/details', {title:'Add Book',})
+     
+     res.render('books/details', {title: 'Add Books',
+     books:''
+    });
 });
 
 // POST process the Book Details page and create a new Book - CREATE
@@ -41,13 +44,12 @@ router.post('/add', (req, res, next) => {
      * ADD CODE HERE *
      *****************/
      let newBook = book({
-      "Title": req.body.Title,
-      "Description":req.body.Description,
-      "Price":req.body.Price,
-      "Author":req.body.Author,
-      "Genre":req.body.Genre
-  });
-  book.create(newBook,(err,books)=>{
+      "Title": req.body.title,
+      "Price":req.body.price,
+      "Author":req.body.author,
+      "Genre":req.body.genre
+     });
+     book.create(newBook,(err,newBook)=>{
       if(err)
       {
           console.log(err);
@@ -55,7 +57,8 @@ router.post('/add', (req, res, next) => {
       }
       else
       {
-      res.redirect('/books');
+        console.log(newBook);
+        res.redirect('/books');
       }
   });
 });
