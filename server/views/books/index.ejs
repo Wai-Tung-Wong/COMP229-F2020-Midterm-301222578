@@ -1,3 +1,4 @@
+<!-- books.js Wai Tung wong 301222578 2022-10-26  Mid-Term Test-->
 <% include ../partials/header.ejs %>
 
     <!-- MAIN CONTENT -->
@@ -35,14 +36,14 @@
                     <!-- ------------------------ -->
                     <!-- ADD the EDIT BUTTON HERE -->
                     <!-- ------------------------ -->
-                    <th class="text-center"><a href="" class="btn btn-primary"><i class="fa fa-plus"></i>Edit</a></th>
+                    <th class="text-center"><a href="/books/<%=books[count]._id%>" class="btn btn-primary"><i class="fa fa-plus"></i>Edit</a></th>
                   </td>
 
                   <td class="text-center">
                     <!-- ------------------------ -->
                     <!-- ADD the DELETE BUTTON HERE -->
                     <!-- ------------------------ -->
-                    <th class="text-center"><a href="" class="btn btn-primary"><i class="fa fa-plus"></i>Delete</a></th>
+                    <th class="text-center"><a href="/books/delete/<%=books[count]._id%>" class="btn btn-primary"><i class="fa fa-plus"></i>Delete</a></th>
                   </td>
                 </tr>
                 <% } %>

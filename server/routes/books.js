@@ -1,3 +1,4 @@
+//books.js Wai Tung wong 301222578 2022-10-26 Mid-Term Test
 // modules required for routing
 let express = require('express');
 let router = express.Router();
@@ -31,10 +32,7 @@ router.get('/add', (req, res, next) => {
     /*****************
      * ADD CODE HERE *
      *****************/
-     
-     res.render('books/details', {title: 'Add Books',
-     books:''
-    });
+     res.render('books/details', {title: 'Add Books', books:''});
 });
 
 // POST process the Book Details page and create a new Book - CREATE
@@ -57,7 +55,6 @@ router.post('/add', (req, res, next) => {
       }
       else
       {
-        console.log(newBook);
         res.redirect('/books');
       }
   });
@@ -69,6 +66,19 @@ router.get('/:id', (req, res, next) => {
     /*****************
      * ADD CODE HERE *
      *****************/
+     let id = req.params.id;
+     book.findById(id,(err,bookToEdit)=>{
+         if(err)
+         {
+             console.log(err);
+             res.end(err);
+         }
+         else
+         {
+             res.render('books/details',{title:'Edit book', books: bookToEdit});
+         }
+     
+     });
 });
 
 // POST - process the information passed from the details form and update the document
@@ -77,7 +87,26 @@ router.post('/:id', (req, res, next) => {
     /*****************
      * ADD CODE HERE *
      *****************/
-
+     let id = req.params.id
+     console.log(req.body);
+     let updatedBook = book({
+      "_id": id,
+      "Title": req.body.title,
+      "Price":req.body.price,
+      "Author":req.body.author,
+      "Genre":req.body.genre
+     });
+     book.updateOne({_id:id}, updatedBook,(err)=>{
+         if(err)
+         {
+             console.log(err);
+             res.end(err);
+         }
+         else
+         {
+             res.redirect('/books');
+         }
+     });
 });
 
 // GET - process the delete by user id
@@ -86,6 +115,18 @@ router.get('/delete/:id', (req, res, next) => {
     /*****************
      * ADD CODE HERE *
      *****************/
+     let id = req.params.id;
+     book.remove({_id:id},(err)=>{
+         if(err)
+         {
+             console.log(err);
+             res.end(err);
+         }
+         else
+         {
+             res.redirect('/books');
+         }         
+     });
 });
 
 
